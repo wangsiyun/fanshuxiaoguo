@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		
+		.box{
+			width: 400px;
+			height: 250px;
+			margin: 150px auto;
+			perspective: 800px;
+		}
+		.shu{
+			width: 400px;
+			height: 250px;
+			transform-style: preserve-3d;
+			transform-origin: bottom;
+			transform: rotateX(40deg);
+			background: lightblue;
+			position: relative;
+			box-shadow: 10px 5px 10px gray;
+		}
+	
+		.ye{
+			width: 200px;
+			height: 250px;
+			position: absolute;
+			right: 0;
+			top: 0;
+			background: lightcoral;
+			transition: 1s;
+			transform-origin:left;
+			text-align: center;
+			line-height: 250px;
+			font-family: Calibri;
+			font-size: 60px;
+			font-weight: bold;
+			color: white;
+		}
+		.yezi{
+			width: 150px;
+			height: 150px;
+			background: url(img/yezi.png) no-repeat center;
+			background-size: cover;
+			position: absolute;
+			animation: ddd 10s ease-out infinite;
+		}
+	
+		@keyframes ddd{
+			from{transform:rotateX(0); left: 0; top: 0;}
+			to{transform:rotateX(90deg); left: 1200px; top: 550px;}
+		}
+	</style>
+	<body>
+		
+		<div class="box">
+			<div class="shu"></div>
+		</div>
+		<div class="yezi"></div>
+	</body>
+	<script type="text/javascript" src="js/jquery-2.1.0.js" ></script>
+	<script>
+		var shu=$(".shu");
+		var arr=[];
+		var len=15;
+		for(var i=0;i<len;i++){
+			var ye=$("<div class='ye'></div>");
+			ye.css("transform","rotateY("+(-len+i)+"deg)")
+			ye.begin=-len+i;//每一页开始的角度
+			ye.after=-178+i;//每一页结束的角度
+			ye.flag=true;//翻转的标识
+			ye.appendTo(shu);
+			ye.html(i+1);
+			arr.push(ye);
+		}
+		$(".ye").click(function(){
+			var index=$(this).index();
+			if(arr[index].flag){
+				$(this).css("transform","rotateY("+(arr[index].after)+"deg) translateX(1px)");
+				arr[index].flag=false;
+			}else{
+				$(this).css("transform","rotateY("+(arr[index].begin)+"deg)");
+				arr[index].flag=true;
+			}
+			
+		});
+	</script>
+</html>
